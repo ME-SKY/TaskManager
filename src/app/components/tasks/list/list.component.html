@@ -1,0 +1,12 @@
+<div class="list-main">
+
+<!--  <div class="filters">-->
+<!--    filters-->
+<!--    <app-filters></app-filters>-->
+<!--  </div>-->
+
+  <div class="task-list">
+    <app-task-card *ngFor="let task of tasks" [task] = "task"></app-task-card>
+  </div>
+
+</div>

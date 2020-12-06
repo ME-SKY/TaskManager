@@ -1,0 +1,40 @@
+<div class="filters-main" [formGroup]="filters">
+
+  <div class="filter-board">
+    <div class="filter">
+
+      <p>Сортировка:</p>
+      <label>
+        Новые
+        <input type="radio" formControlName="sortNew">
+      </label>
+      <label>
+        Старые
+        <input type="radio" formControlName="sortOld">
+      </label>
+    </div>
+  </div>
+
+  <div class="filter-board">
+    <div class="filter">
+
+      <p>Приоритет</p>
+
+      <select multiple formControlName="priority">
+        <option *ngFor="let priority of priorities" [ngValue]="priority">
+          {{ priority.name }}
+        </option>
+      </select>
+    </div>
+    <div class="filter">
+
+      <p>Отметка</p>
+
+      <select multiple formControlName="tag">
+        <option *ngFor="let tag of tags" [ngValue]="tag">
+          {{ tag.name }}
+        </option>
+      </select>
+    </div>
+  </div>
+</div>

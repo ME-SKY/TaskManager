@@ -1,0 +1,14 @@
+<div class="task-card">
+  <h2 class="name">
+    {{task.name}}
+  </h2>
+  <h4 class="created-time additional">
+    создано: {{task.createdDate}}
+  </h4>
+  <h4 class="priority additional">
+    Приоритет: {{task.priority}}
+  </h4>
+  <h4 class="tags additional">
+    Отметки: {{task.tags.join(', ')}}
+  </h4>
+</div>

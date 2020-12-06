@@ -1,0 +1,39 @@
+.actions{
+  display: flex;
+  justify-content: flex-start;
+}
+
+.button{
+  display: grid;
+  align-items: center;
+  justify-content: center;
+  height: 34px;
+  border-radius: 3px;
+  padding: 0 8px;
+  width: fit-content;
+}
+
+.edit{
+  margin-left: 2vh;
+  background: #0091dc;
+  box-shadow: 0 0 2px 0 rgba(64, 159, 213, .3);
+  color: white;
+}
+
+.add{
+  background: #0091dc;
+  box-shadow: 0 0 2px 0 rgba(64, 159, 213, .3);
+  color: white;
+}
+
+.delete{
+  margin-left: auto;
+  background: #f44a48;
+  color: white;
+  box-shadow: 0 0 2px 0 rgba(239, 108, 109, .3);
+}
+
+.back{
+  background: white;
+  box-shadow: 0 0 2px 0 rgba(0, 0, 0, .3);
+}

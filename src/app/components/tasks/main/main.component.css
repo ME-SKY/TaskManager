@@ -1,0 +1,46 @@
+.main{
+  display: grid;
+  grid-template-areas:
+  "filters nav-actions nav-actions nav-actions"
+  "filters lists lists lists"
+  " . lists lists lists";
+
+  grid-template-columns: 200px 4fr;
+  margin: 8px
+}
+
+.nav-actions{
+  grid-area: nav-actions;
+  margin-left: 2vh;
+  box-sizing: border-box;
+  height: fit-content;
+}
+
+.filters{
+  grid-area: filters;
+  height: fit-content;
+  width: fit-content;
+}
+.list{
+  box-sizing: border-box;
+  margin: 2vh 0 2vh 2vh;
+  /*margin: 2vh 2vh;*/
+}
+
+
+@media (max-width: 600px) {
+  .main{
+    display: grid;
+    grid-template-areas:
+    'nav-actions'
+    'filters'
+    'lists';
+    grid-template-columns: 1fr;
+  }
+
+  .filters{
+    width: auto;
+    margin-top: 2vh;
+  }
+}
+
