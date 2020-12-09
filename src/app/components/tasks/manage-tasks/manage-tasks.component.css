@@ -1,0 +1,50 @@
+.manage-tasks{
+  display: grid;
+  grid-template-areas:
+    "filters . . ."
+    "filters lists lists lists"
+    " . lists lists lists";
+
+  grid-template-columns: 200px 4fr;
+}
+
+.filters{
+  grid-area: filters;
+  height: fit-content;
+  width: fit-content;
+  position: relative;
+  top: -34px;
+}
+
+.list{
+  box-sizing: border-box;
+  margin: 2vh 0 2vh 2vh;
+}
+
+
+@media (max-width: 600px) {
+  .manage-tasks{
+    display: grid;
+    grid-template-areas:
+      'filters'
+      'lists';
+    grid-template-columns: 1fr;
+    position: relative;
+    top: 34px;
+  }
+
+  .filters{
+    width: auto;
+    margin-top: 2vh;
+  }
+
+  .list{
+    margin: 2vh 0;
+  }
+
+  .nav-actions{
+    margin: 2vh 0 0 0;
+  }
+}
+
+

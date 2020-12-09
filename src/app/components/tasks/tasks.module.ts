@@ -8,6 +8,21 @@ import {RouterModule} from '@angular/router';
 import {NavigationComponent} from './navigation/navigation.component';
 import {ReactiveFormsModule} from '@angular/forms';
 import {TaskCardComponent} from './task-card/task-card.component';
+import {ManageTasksComponent} from './manage-tasks/manage-tasks.component';
+import {TaskFormComponent} from './task/task-form/task-form.component';
+import {PipesModule} from '../../pipes/pipes.module';
+
+export const Priorities = [
+  {name: 'Low'},
+  {name: 'Normal'},
+  {name: 'High'}
+];
+
+export const Tags = [
+  {name: 'Research'},
+  {name: 'Design'},
+  {name: 'Development'}
+];
 
 
 @NgModule({
@@ -17,14 +32,17 @@ import {TaskCardComponent} from './task-card/task-card.component';
     TaskComponent,
     FiltersComponent,
     NavigationComponent,
-    TaskCardComponent],
+    TaskCardComponent,
+    ManageTasksComponent,
+    TaskFormComponent],
   exports: [
     MainComponent
   ],
   imports: [
     CommonModule,
     RouterModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    PipesModule,
   ]
 })
 export class TasksModule {

@@ -1,6 +1,7 @@
 .actions{
   display: flex;
   justify-content: flex-start;
+  margin-left: 2vh;
 }
 
 .button{
@@ -11,6 +12,7 @@
   border-radius: 3px;
   padding: 0 8px;
   width: fit-content;
+  border: 0;
 }
 
 .edit{
@@ -36,4 +38,10 @@
 .back{
   background: white;
   box-shadow: 0 0 2px 0 rgba(0, 0, 0, .3);
+}
+
+@media (max-width: 600px) {
+  .actions{
+    margin-left: 0;
+  }
 }

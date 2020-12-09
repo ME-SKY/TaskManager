@@ -1,6 +1,6 @@
-<div class="actions">
-  <div class="back button" *ngIf="buttons.back.isOn">Назад</div>
-  <div class="edit button" *ngIf="buttons.edit_task.isOn">Редактировать</div>
-  <div class="add button" *ngIf="buttons.new_task.isOn" [routerLink]="'/task'">Добавить задачу</div>
-  <div class="delete button" *ngIf="buttons.delete_task.isOn">Удалить</div>
+<div class="actions" [style.margin-left.vh]="leftMarginVh">
+  <button class="back button" *ngIf="(buttons$ | async).back" [routerLink]="['/manage-tasks']">Назад</button>
+  <button class="edit button" *ngIf="(buttons$ | async).edit_task" (click)="editTask()">Редактировать</button>
+  <button class="add button" *ngIf="(buttons$ | async).new_task" [routerLink]="['/add-task']" [state]="{create: true}" (click)="createTask()">Добавить задачу</button>
+  <button class="delete button" *ngIf="(buttons$ | async).delete_task">Удалить</button>
 </div>

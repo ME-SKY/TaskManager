@@ -1,35 +1,14 @@
-import {Component, EventEmitter, Input, OnDestroy, OnInit, Output} from '@angular/core';
+import {Component, HostListener, OnDestroy, OnInit} from '@angular/core';
 import {ActivatedRoute, Router} from '@angular/router';
 import {Location} from '@angular/common';
+import {Store} from '@ngrx/store';
+import {State} from '../../../store/reducers/task.reducer';
+import {Observable, Subject} from 'rxjs';
+import {NavButtonsToggler} from '../../../models/nav-buttons';
+import {toggleEditTask, toggleNavButtons} from '../../../store/actions/task.actions';
+import {Task} from '../../../models/task';
+import {distinctUntilChanged, takeUntil} from 'rxjs/operators';
 
-// export interface ButtonInterface {
-//   button: string;
-//   isOn: boolean;
-//   params: object;
-// }
-
-export const DEFAULT_BUTTONS = {
-  back: {
-    button: 'back',
-    isOn: false,
-    params: {},
-  },
-  new_task: {
-    button: 'new_task',
-    isOn: true,
-    params: {},
-  },
-  edit_task: {
-    button: 'edit_task',
-    isOn: false,
-    params: {},
-  },
-  delete_task: {
-    button: 'delete_task',
-    isOn: false,
-    params: {},
-  }
-};
 
 @Component({
   selector: 'app-navigation',
@@ -38,87 +17,119 @@ export const DEFAULT_BUTTONS = {
 })
 export class NavigationComponent implements OnInit, OnDestroy {
 
-  @Output() somethingChanged = new EventEmitter();
 
-  // defaultButtons = {
-  //   back: {
-  //     button: 'back',
-  //     isOn: false,
-  //     params: {},
-  //   },
-  //   new_task: {
-  //     button: 'new_task',
-  //     isOn: true,
-  //     params: {},
-  //   },
-  //   edit_task: {
-  //     button: 'edit_task',
-  //     isOn: false,
-  //     params: {},
-  //   },
-  //   delete_task: {
-  //     button: 'delete_task',
-  //     isOn: false,
-  //     params: {},
-  //   }
-  // };
+  leftMarginVh = 2;
 
-  buttons = DEFAULT_BUTTONS;
+  buttons$: Observable<NavButtonsToggler>;
+  task$: Observable<Task>;
+  subs = new Subject();
 
-  subs: any;
+  currentTaskId: number;
+
+  @HostListener('window:resize', ['$event'])
+  getScreenWidth(): void {
+    switch (this.location.path().split('/')[1]) {
+      case 'task':
+        this.leftMarginVh = 0;
+        break;
+      case 'add-task':
+        this.leftMarginVh = 0;
+        break;
+      case 'manage-tasks':
+        this.leftMarginVh = window.innerWidth <= 600 ? 0 : 2;
+        break;
+      default:
+        break;
+    }
+  }
 
   constructor(private router: Router,
               private route: ActivatedRoute,
-              private location: Location) {
-    // this.route.url.subscribe(x => {
-    //   console.log('url is');
-    //   console.log(x);
-    // });
-    this.subs = this.location.onUrlChange(
-    (url, state) => {
-
-      // switch () {
-      //
-      // }
-      switch (url) {
-        case '/task':
-          console.log('task');
-          this.buttons.back.isOn = true;
-          this.buttons.edit_task.isOn = true;
-          this.buttons.delete_task.isOn = true;
-          this.buttons.new_task.isOn = false;
-          break;
-        case '/list':
-          console.log('list');
-          this.buttons = DEFAULT_BUTTONS;
-          break;
-        case '/edit':
-          this.buttons.back.isOn = true;
-          this.buttons.edit_task.isOn = false;
-          this.buttons.delete_task.isOn = false;
-          this.buttons.new_task.isOn = false;
-          console.log('edit');
-          break;
-        default:
-          console.log('default');
-          break;
-      }
-      console.log(url);
+              private location: Location,
+              private store: Store<{ tasks: State}>) {
+    this.buttons$ = this.store.select(state => state.tasks.navigationButtons);
+    this.task$ = this.store.select(state => state.tasks.task);
+    this.task$.pipe(
+      takeUntil(this.subs),
+      distinctUntilChanged()
+    ).subscribe(x => {
+      this.currentTaskId = x.id;
     });
 
-    console.log(this.location.path());
+    this.location.onUrlChange(
+    (url, state) => {
+      switch (url.split('/')[1]) {
+        case 'task':
+          this.store.dispatch(toggleNavButtons({
+            buttons: {
+              back: true,
+              new_task: false,
+              edit_task: true,
+              delete_task: true
+            }
+          }));
+          this.leftMarginVh = 0;
+          break;
+        case 'manage-tasks':
+          this.store.dispatch(toggleNavButtons({
+            buttons: {
+              back: false,
+              new_task: true,
+              edit_task: false,
+              delete_task: false
+            }
+          }));
+          this.leftMarginVh = window.innerWidth <= 600 ? 0 : 2;
+          break;
+        case 'list':
+          this.leftMarginVh = 2;
+          break;
+        case 'edit':
+          this.store.dispatch(toggleNavButtons({
+            buttons: {
+              back: true,
+              new_task: false,
+              edit_task: false,
+              delete_task: false
+            }
+          }));
+          break;
+        default:
+          break;
+      }
+    });
   }
 
   ngOnInit(): void {
-    console.log(this.location.path());
-    this.subs = this.location.subscribe((ev: PopStateEvent) => {
-      console.log(ev);
-    });
   }
 
   ngOnDestroy(): void{
-    console.log(this.location.path());
-    this.subs.unsubscribe();
+    this.subs.next();
+    this.subs.complete();
   }
 
+  editTask(): void {
+    this.store.dispatch(toggleEditTask({edit: true}));
+    this.store.dispatch(toggleNavButtons({
+      buttons: {
+        back: true,
+        new_task: false,
+        edit_task: false,
+        delete_task: false
+      }
+    }));
+  }
+
+  createTask(): void {
+    this.store.dispatch(toggleNavButtons({
+      buttons: {
+        back: true,
+        new_task: false,
+        edit_task: false,
+        delete_task: false
+      }
+    }));
+    this.leftMarginVh = 0;
+    this.store.dispatch(toggleEditTask({edit: true}));
+  }
 }

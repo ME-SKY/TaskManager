@@ -1,1 +1,5 @@
-<p>task works!</p>
+<div class="task-layout">
+  <div class="task">
+    <app-task-form [task]="(task$ | async)" [create]="create"></app-task-form>
+  </div>
+</div>

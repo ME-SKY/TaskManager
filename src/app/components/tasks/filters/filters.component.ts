@@ -20,11 +20,21 @@ export class FiltersComponent implements OnInit {
     {name: 'Development'}
   ];
 
-  filters = new FormGroup({
-    sortOld: new FormControl(false),
-    sortNew: new FormControl(true),
-    priority: new FormControl([this.priorities[1]]),
-    tag: new FormControl([this.tags[1], this.tags[0]])
+  sort: FormControl = new FormControl('asc');
+  // filters = new FormGroup({
+  sortOld: FormControl = new FormControl(false);
+  sortNew: FormControl = new FormControl(true);
+
+  priorityForm: FormGroup = new FormGroup({
+    low: new FormControl(false),
+    normal: new FormControl(true),
+    high: new FormControl(false)
+  });
+
+  tagsForm: FormGroup = new FormGroup({
+    research: new FormControl(false),
+    design: new FormControl(false),
+    development: new FormControl(false)
   });
 
   constructor() {

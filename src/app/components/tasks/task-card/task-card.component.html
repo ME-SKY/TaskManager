@@ -3,10 +3,10 @@
     {{task.name}}
   </h2>
   <h4 class="created-time additional">
-    создано: {{task.createdDate}}
+    создано: {{task.createdDate | date: 'd MMM, y, H:mm':undefined:'ru-RU'}}
   </h4>
   <h4 class="priority additional">
-    Приоритет: {{task.priority}}
+    Приоритет: {{task.priority | priority}}
   </h4>
   <h4 class="tags additional">
     Отметки: {{task.tags.join(', ')}}

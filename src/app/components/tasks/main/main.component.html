@@ -1,20 +1,11 @@
 <div class="main">
 
-  <div class="nav-actions">
+  <div class="nav-actions" [style.margin-left.px]="navActionsLeftMarginPx">
     <app-navigation></app-navigation>
   </div>
 
-  <div class="filters">
-    <app-filters></app-filters>
-  </div>
+  <router-outlet>
 
-  <div class="list">
-    <app-list></app-list>
-  </div>
-
-
-<!--  <div class="manage-tasks">-->
-<!--    <router-outlet></router-outlet>-->
-<!--  </div>-->
+  </router-outlet>
 
 </div>

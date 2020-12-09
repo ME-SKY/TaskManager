@@ -1,0 +1,44 @@
+<form [formGroup]="taskForm" class="grid-form">
+  <input [hidden]="true" class="form-control" formControlName="id" value="" name="id">
+  <div class="form-item">
+    <label class="label">НАЗВАНИЕ ЗАДАЧИ</label>
+    <div>
+      <input type="text" formControlName="name">
+    </div>
+  </div>
+
+  <div class="form-item">
+    <label class="label">ПРИОРИТЕТ</label>
+    <div>
+      <select formControlName="priority">
+        <option *ngFor="let priority of priorities; index as i" [ngValue]="i">
+          {{ priority.name }}
+        </option>
+      </select>
+    </div>
+  </div>
+
+  <div class="form-item">
+    <label class="label">ОТМЕТКИ</label>
+    <div>
+      <select [multiple]="true" formControlName="tags">
+        <option *ngFor="let tag of tags" [ngValue]="tag.name" >
+          {{ tag.name }}
+        </option>
+      </select>
+    </div>
+  </div>
+
+  <div class="form-item">
+    <label class="label">ОПИСАНИЕ</label>
+    <div>
+      <textarea formControlName="description" id="" [style.width.px]="textAreaWidth"  rows="5"></textarea>
+    </div>
+  </div>
+
+  <div [hidden]="readOnly" >
+    <button class="submit-button"
+            [disabled]="!taskForm.valid"
+    (click)="save()" >Сохранить</button>
+  </div>
+</form>

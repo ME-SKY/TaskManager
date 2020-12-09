@@ -6,7 +6,9 @@
 <!--  </div>-->
 
   <div class="task-list">
-    <app-task-card *ngFor="let task of tasks" [task] = "task"></app-task-card>
+    <app-task-card *ngFor="let task of (tasks$ | async)"
+                   [task] = "task"
+                   [routerLink]="['/task', task.id]" (click)="setTask(task)"></app-task-card>
   </div>
 
 </div>

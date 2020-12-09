@@ -1,40 +1,62 @@
-<div class="filters-main" [formGroup]="filters">
+<div class="filters-main">
 
   <div class="filter-board">
-    <div class="filter">
+    <div class="filter" >
 
       <p>Сортировка:</p>
-      <label>
-        Новые
-        <input type="radio" formControlName="sortNew">
+
+      <label class="container-radio">Новые
+        <input type="radio" value="asc" name="sort"  [formControl]="sort">
+        <span class="checkmark-radio"></span>
       </label>
-      <label>
-        Старые
-        <input type="radio" formControlName="sortOld">
+
+      <label class="container-radio">Старые
+        <input type="radio" value="desc" name="sort" >
+        <span class="checkmark-radio"></span>
       </label>
     </div>
   </div>
 
   <div class="filter-board">
-    <div class="filter">
 
+
+    <div class="filter" [formGroup]="priorityForm">
       <p>Приоритет</p>
 
-      <select multiple formControlName="priority">
-        <option *ngFor="let priority of priorities" [ngValue]="priority">
-          {{ priority.name }}
-        </option>
-      </select>
-    </div>
-    <div class="filter">
+      <label class="container">{{priorities[0].name}}
+        <input type="checkbox" formControlName="low">
+        <span class="checkmark"></span>
+      </label>
 
+      <label class="container">{{priorities[1].name}}
+        <input type="checkbox" formControlName="normal">
+        <span class="checkmark"></span>
+      </label>
+
+      <label class="container">{{priorities[2].name}}
+        <input type="checkbox" formControlName="high">
+        <span class="checkmark"></span>
+      </label>
+    </div>
+
+
+    <div class="filter" [formGroup]="tagsForm">
       <p>Отметка</p>
 
-      <select multiple formControlName="tag">
-        <option *ngFor="let tag of tags" [ngValue]="tag">
-          {{ tag.name }}
-        </option>
-      </select>
+      <label class="container">{{tags[0].name}}
+        <input type="checkbox" formControlName="research">
+        <span class="checkmark"></span>
+      </label>
+
+      <label class="container">{{tags[1].name}}
+        <input type="checkbox" formControlName="design">
+        <span class="checkmark"></span>
+      </label>
+
+      <label class="container">{{tags[2].name}}
+        <input type="checkbox" formControlName="development">
+        <span class="checkmark"></span>
+      </label>
     </div>
   </div>
 </div>

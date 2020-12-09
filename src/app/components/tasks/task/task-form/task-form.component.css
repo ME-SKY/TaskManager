@@ -1,0 +1,20 @@
+.grid-form{
+  display: grid;
+  grid-template-rows: repeat(5, 1fr);
+  align-items: center;
+  margin: 2vh;
+}
+
+.submit-button{
+  display: grid;
+  align-items: center;
+  justify-content: center;
+  height: 34px;
+  border-radius: 3px;
+  padding: 0 8px;
+  width: fit-content;
+  border: 0;
+  background: #0091dc;
+  box-shadow: 0 0 2px 0 rgba(64, 159, 213, .3);
+  color: white;
+}
